@@ -1,0 +1,12 @@
+MediaPipeTasksCommonGraph/.DS_Store
+.DS_Store
+.swiftpm/xcode/xcuserdata/pascalburlet.xcuserdatad/xcschemes/xcschememanagement.plist
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.swiftpm/xcode/package.xcworkspace/xcuserdata/pascalburlet.xcuserdatad/UserInterfaceState.xcuserstate
+.swiftpm/xcode/xcshareddata/xcschemes
+.build
+MediaPipeTasksCommonGraph/Podfile.lock
+MediaPipeTasksCommonGraph/MediaPipeCommonGraphLibraries.xcodeproj/project.xcworkspace/xcuserdata/pascalburlet.xcuserdatad/UserInterfaceState.xcuserstate
+PoseLandmarker.xcodeproj/project.xcworkspace/xcuserdata/pascalburlet.xcuserdatad/UserInterfaceState.xcuserstate
+ExampleApp/PoseLandmarker.xcodeproj/project.xcworkspace/xcuserdata/pascalburlet.xcuserdatad/UserInterfaceState.xcuserstate
+MediaPipeTasksCommonGraph/Podfile.lock
