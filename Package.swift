@@ -21,9 +21,14 @@ let package = Package(
         .target(
             name: "SwiftTasksVision",
             dependencies: ["MediaPipeCommonGraphLibraries", "MediaPipeTasksVision", "MediaPipeTasksCommon"],
-//            linkerSettings: [
-//                .unsafeFlags(["-ObjC"])
-//            ]
+            linkerSettings: [
+                .unsafeFlags(["-ObjC"]),
+                .linkedFramework("CoreMedia"),
+                .linkedFramework("CoreVideo"),
+                .linkedFramework("AVFoundation"),
+                .linkedFramework("Accelerate"),
+                .linkedLibrary("c++"),
+            ]
         ),
         .binaryTarget(
             name: "MediaPipeTasksVision",
