@@ -10,6 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "SwiftTasksVision",
+            type: .dynamic,
             targets: ["SwiftTasksVision"]
         ),
         .executable(
