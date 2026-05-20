@@ -10,7 +10,10 @@ let package = Package(
     products: [
         .library(
             name: "SwiftTasksVision",
-            targets: ["SwiftTasksVision"]
+            targets: [
+                "SwiftTasksVision",
+                "FaceMeasurement",
+            ]
         ),
         .executable(
             name: "UpdatePackage",
