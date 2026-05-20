@@ -10,7 +10,6 @@ let package = Package(
     products: [
         .library(
             name: "SwiftTasksVision",
-            type: .dynamic,
             targets: [
                 "SwiftTasksVision",
                 "FaceMeasurement",
@@ -41,7 +40,7 @@ let package = Package(
                 .linkedFramework("AVFoundation"),
                 .linkedFramework("Accelerate"),
                 .linkedLibrary("c++"),
-                //.unsafeFlags(["-ObjC"]),
+                .unsafeFlags(["-ObjC"]),
             ]
         ),
         .binaryTarget(
