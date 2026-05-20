@@ -23,6 +23,9 @@ let package = Package(
     targets: [
         .target(name: "FaceMeasurement",
                 dependencies: ["SwiftTasksVision"],
+                linkerSettings: [
+                    .unsafeFlags(["-ObjC"]),
+                ]
                ),
         .target(
             name: "SwiftTasksVision",
@@ -37,7 +40,7 @@ let package = Package(
                 .linkedFramework("AVFoundation"),
                 .linkedFramework("Accelerate"),
                 .linkedLibrary("c++"),
-                .unsafeFlags(["-ObjC"]),
+                //.unsafeFlags(["-ObjC"]),
             ]
         ),
         .binaryTarget(

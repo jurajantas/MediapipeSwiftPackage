@@ -1,7 +1,7 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-import Common
+// import Common
 import SwiftUI
 import MediaPipeTasksVision
 
@@ -14,6 +14,7 @@ import MediaPipeTasksVision
 // TODO: this is good idea. Finalize it. This will allow you to drop notifications.
 
 // This is real implementation. Not a mock.
+/*
 public final class FaceMeasurement: FaceLandmarkerProvider {
     
     // load the face model
@@ -27,8 +28,9 @@ public final class FaceMeasurement: FaceLandmarkerProvider {
         1.2
     }
 }
+ */
 
-/*
+
 public extension Notification.Name {
     static let doBlackoutNotification = Notification.Name("doBlackoutNotification") // video URL vstup
     static let blackoutDoneNotification = Notification.Name("blackoutDoneNotification") //URL video vystup
@@ -36,4 +38,4 @@ public extension Notification.Name {
     static let measureEyesNotification = Notification.Name("measureEyesNotification") // UIImage vstup
     static let measureEyesResultNotification = Notification.Name("measureEyesResultNotification") // Double
 }
- */
+

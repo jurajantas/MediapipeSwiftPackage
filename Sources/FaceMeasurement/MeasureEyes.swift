@@ -5,10 +5,13 @@
 //  Created by Juraj Antas on 10/12/2023.
 //
 
-import Common
 import Foundation
 import MediaPipeTasksVision
 import simd
+
+public enum FaceDetectionError: Error {
+    case noFace
+}
 
 public class MeasureEyes {
     // TODO: singletons must be handled some other way in Swift 6.0 mode.
