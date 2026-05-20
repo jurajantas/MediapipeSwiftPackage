@@ -24,6 +24,10 @@ let package = Package(
             dependencies: ["MediaPipeCommonGraphLibraries", "MediaPipeTasksVision", "MediaPipeTasksCommon"],
             linkerSettings: [
                 .unsafeFlags(["-ObjC"]),
+                .linkedFramework("UIKit"),
+                .linkedFramework("Metal"),
+                .linkedFramework("MetalKit"),
+                .linkedFramework("CoreGraphics"),
                 .linkedFramework("CoreMedia"),
                 .linkedFramework("CoreVideo"),
                 .linkedFramework("AVFoundation"),
