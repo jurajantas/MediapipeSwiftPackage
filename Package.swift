@@ -23,7 +23,6 @@ let package = Package(
             name: "SwiftTasksVision",
             dependencies: ["MediaPipeCommonGraphLibraries", "MediaPipeTasksVision", "MediaPipeTasksCommon"],
             linkerSettings: [
-                //.unsafeFlags(["-ObjC"]),
                 .linkedFramework("UIKit"),
                 .linkedFramework("Metal"),
                 .linkedFramework("MetalKit"),
@@ -33,6 +32,7 @@ let package = Package(
                 .linkedFramework("AVFoundation"),
                 .linkedFramework("Accelerate"),
                 .linkedLibrary("c++"),
+                .unsafeFlags(["-ObjC"]),
             ]
         ),
         .binaryTarget(
