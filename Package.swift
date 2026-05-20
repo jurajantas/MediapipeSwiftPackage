@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:5.10
 import PackageDescription
 import Foundation
 
@@ -10,6 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "SwiftTasksVision",
+            type: .dynamic,
             targets: [
                 "SwiftTasksVision",
                 "FaceMeasurement",
@@ -63,3 +64,4 @@ let package = Package(
         ),
     ]
 )
+
