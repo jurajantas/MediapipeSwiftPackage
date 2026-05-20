@@ -23,7 +23,7 @@ let package = Package(
             name: "SwiftTasksVision",
             dependencies: ["MediaPipeCommonGraphLibraries", "MediaPipeTasksVision", "MediaPipeTasksCommon"],
             linkerSettings: [
-                .unsafeFlags(["-ObjC"]),
+                //.unsafeFlags(["-ObjC"]),
                 .linkedFramework("UIKit"),
                 .linkedFramework("Metal"),
                 .linkedFramework("MetalKit"),
