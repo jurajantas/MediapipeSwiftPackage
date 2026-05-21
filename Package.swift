@@ -12,7 +12,7 @@ let package = Package(
             name: "SwiftTasksVision",
             targets: [
                 "SwiftTasksVision",
-                "FaceMeasurement",
+//                "FaceMeasurement",
             ]
         ),
         .executable(
@@ -21,12 +21,12 @@ let package = Package(
         )
     ],
     targets: [
-        .target(name: "FaceMeasurement",
-                dependencies: ["SwiftTasksVision"],
-                linkerSettings: [
-                    .unsafeFlags(["-ObjC"]),
-                ]
-               ),
+//        .target(name: "FaceMeasurement",
+//                dependencies: ["SwiftTasksVision"],
+//                linkerSettings: [
+//                    .unsafeFlags(["-ObjC"]),
+//                ]
+//               ),
         .target(
             name: "SwiftTasksVision",
             dependencies: ["MediaPipeCommonGraphLibraries", "MediaPipeTasksVision", "MediaPipeTasksCommon"],
