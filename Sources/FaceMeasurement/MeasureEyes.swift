@@ -53,7 +53,7 @@ public class MeasureEyes {
     func computeEyeSizeInPixels(uiImage: UIImage) -> Double? {
         let result = faceLandmarker.detect(image: uiImage)
         guard let face = result?.faceLandmarkerResults.first, let face else {
-            print("no eyes, returning nil")
+            // print("no eyes, returning nil")
             return nil
         }
         
@@ -79,11 +79,11 @@ public class MeasureEyes {
             let rightRadius = rightDiameter / 2.0
 
             let size = Double((leftRadius + rightRadius) / 2.0)
-            print("Eye size: \(size)")
+            // print("Eye size: \(size)")
             return size
         }
         catch {
-            print("failed to measure eye size, returning nil")
+            // print("failed to measure eye size, returning nil")
             return nil
         }
     }
