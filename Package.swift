@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version:5.9
 import PackageDescription
 import Foundation
 
@@ -10,9 +10,10 @@ let package = Package(
     products: [
         .library(
             name: "SwiftTasksVision",
+            type: .static,
             targets: [
                 "SwiftTasksVision",
-//                "FaceMeasurement",
+                "FaceMeasurement",
             ]
         ),
         .executable(
@@ -21,26 +22,26 @@ let package = Package(
         )
     ],
     targets: [
-//        .target(name: "FaceMeasurement",
-//                dependencies: ["SwiftTasksVision"],
-//                linkerSettings: [
+        .target(name: "FaceMeasurement",
+                dependencies: ["SwiftTasksVision"],
+                linkerSettings: [
 //                    .unsafeFlags(["-ObjC"]),
-//                ]
-//               ),
+                ]
+               ),
         .target(
             name: "SwiftTasksVision",
-            dependencies: ["MediaPipeCommonGraphLibraries", "MediaPipeTasksVision", "MediaPipeTasksCommon"],
+            dependencies: ["SwiftTasksVisionCore"]
+        ),
+        .target(
+            name: "SwiftTasksVisionCore",
+            dependencies: ["MediaPipeCommonGraphLibraries", "MediaPipeTasksVision"],
             linkerSettings: [
-                .linkedFramework("UIKit"),
-                .linkedFramework("Metal"),
-                .linkedFramework("MetalKit"),
-                .linkedFramework("CoreGraphics"),
+                .unsafeFlags(["-ObjC"]),
                 .linkedFramework("CoreMedia"),
                 .linkedFramework("CoreVideo"),
                 .linkedFramework("AVFoundation"),
                 .linkedFramework("Accelerate"),
-                .linkedLibrary("c++"),
-                .unsafeFlags(["-ObjC"]),
+                .linkedLibrary("c++")
             ]
         ),
         .binaryTarget(
@@ -50,10 +51,6 @@ let package = Package(
         .binaryTarget(
             name: "MediaPipeCommonGraphLibraries",
             path: "Dependencies/MediaPipeCommonGraphLibraries.xcframework"
-        ),
-        .binaryTarget(
-            name: "MediaPipeTasksCommon",
-            path: "Dependencies/MediaPipeTasksCommon.xcframework"
         ),
         .executableTarget(
             name: "UpdatePackage",
