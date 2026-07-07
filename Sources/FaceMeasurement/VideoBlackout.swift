@@ -215,7 +215,7 @@ class VideoBlackout {
             if frameCounter < framesToSkip {
                 continue
             }
-            let ciImage = CIImage(cvPixelBuffer: imageBuffer)
+            let ciImage = CIImage(cvPixelBuffer: imageBuffer).oriented(cameraOrientation == .portrait ? .right : .down)
             let context = CIContext()
             if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
                 //autoreleasepool is here because I need to dealloc UIImages sooner. Otherwise app crashes on low memory.
