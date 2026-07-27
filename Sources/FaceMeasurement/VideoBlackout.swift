@@ -38,7 +38,7 @@ class VideoBlackout {
         assetWriter = try AVAssetWriter(outputURL: outputPath, fileType: AVFileType.mov)
     }
     
-    func startProcess(cameraOrientation: CameraOrientation, size: CGSize, leftEyesRect: CGRect, rightEyeRect: CGRect, fromTime: TimeInterval, completion: @escaping @Sendable (Result<URL, VideoEncodingError>) -> Void) {
+    func startProcess(size: CGSize, leftEyesRect: CGRect, rightEyeRect: CGRect, fromTime: TimeInterval, completion: @escaping @Sendable (Result<URL, VideoEncodingError>) -> Void) {
         
         startTime = fromTime
         //TODO: you may want to rewrite this with await async..when xcode 16 hits the stores.
@@ -46,7 +46,7 @@ class VideoBlackout {
         let outputUrl = self.videoOutputURL
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else {return}
-            doTheVideoBlackout(cameraOrientation: cameraOrientation, input: videoInputURL, leftEyesRect: leftEyesRect, rightEyeRect: rightEyeRect)
+            doTheVideoBlackout(input: videoInputURL, leftEyesRect: leftEyesRect, rightEyeRect: rightEyeRect)
             self.finilizeVideoEncoding { error in
                 DispatchQueue.main.async {
                     if error != nil {
@@ -171,12 +171,39 @@ class VideoBlackout {
         
         return nil
     }
-    
+
+    private func imageOrientation(
+        for transform: CGAffineTransform
+    ) -> CGImagePropertyOrientation {
+        let a = transform.a.rounded()
+        let b = transform.b.rounded()
+        let c = transform.c.rounded()
+        let d = transform.d.rounded()
+
+        switch (a, b, c, d) {
+        case (1, 0, 0, 1):
+            return .up
+
+        case (0, 1, -1, 0):
+            return .right
+
+        case (-1, 0, 0, -1):
+            return .down
+
+        case (0, -1, 1, 0):
+            return .left
+
+        default:
+            assertionFailure("Unsupported video transform: \(transform)")
+            return .up
+        }
+    }
+
     //input video url
     //output video url
     //Whole video will be blacked out except eyes
     //NOTE: decompression with let imageGenerator = AVAssetImageGenerator(asset: asset) take too much memory. Do not use it.
-    func doTheVideoBlackout(cameraOrientation: CameraOrientation, input videoURL: URL, leftEyesRect: CGRect, rightEyeRect: CGRect) {
+    func doTheVideoBlackout(input videoURL: URL, leftEyesRect: CGRect, rightEyeRect: CGRect) {
      
         let asset = AVAsset(url: videoURL)
         
@@ -184,12 +211,17 @@ class VideoBlackout {
             return
         }
         
-        let videoTrack = asset.tracks(withMediaType: .video).first
+        guard let videoTrack = asset.tracks(withMediaType: .video).first else {
+            return
+        }
+
         let outputSettings: [String: Any] = [
             kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB
         ]
-        let trackOutput = AVAssetReaderTrackOutput(track: videoTrack!, outputSettings: outputSettings)
-        
+        let trackOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings: outputSettings)
+
+        let orientation = imageOrientation(for: videoTrack.preferredTransform)
+
         reader.add(trackOutput)
         reader.startReading()
         
@@ -215,20 +247,15 @@ class VideoBlackout {
             if frameCounter < framesToSkip {
                 continue
             }
-            let ciImage = CIImage(cvPixelBuffer: imageBuffer).oriented(cameraOrientation == .portrait ? .right : .down)
+            let ciImage = CIImage(cvPixelBuffer: imageBuffer).oriented(orientation)
             let context = CIContext()
             if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
                 //autoreleasepool is here because I need to dealloc UIImages sooner. Otherwise app crashes on low memory.
                 autoreleasepool {
                     // Code that creates autoreleased objects.
-                    let image: UIImage
-                    switch cameraOrientation {
-                    case .portrait:
-                        image = UIImage(cgImage: cgImage, scale: 0, orientation: .right)
-                    case .landscape:
-                        image = UIImage(cgImage: cgImage, scale: 0, orientation: .down)
-                    }
-                    
+
+                    let image = UIImage(cgImage: cgImage, scale: 1, orientation: .up)
+
                     if doTheBlackOut {
                         let blackImage = image.applyBlackMaskToImage(keepImageInRect: [leftEyesRect, rightEyeRect])
                         guard let blackImage = blackImage else {

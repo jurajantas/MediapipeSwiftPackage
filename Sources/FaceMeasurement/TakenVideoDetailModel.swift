@@ -70,7 +70,6 @@ public class TakenVideoDetailModel: FaceLandmarkerHelperDelegate {
     var videoURL: URL?
     var blackoutVideoURL: URL?
     var image: UIImage?
-    var cameraMode: CameraOrientation = .portrait //TODO: allow all orientations
     
     var imageVerificationResults: (faceInImage: Bool, openEyes: Bool, noBlur: Bool) = (false, false, false)
     
@@ -212,7 +211,7 @@ public class TakenVideoDetailModel: FaceLandmarkerHelperDelegate {
             return
         }
         #warning("Tu vies nastavit cas od ktoreho sa zacina ukladat blackoutnute video -> fromTime")
-        videoTools?.startProcess(cameraOrientation: cameraMode, size: image.size, leftEyesRect: eyeLeftRect, rightEyeRect: eyeRightRect, fromTime: 5.0, completion: { result in
+        videoTools?.startProcess(size: image.size, leftEyesRect: eyeLeftRect, rightEyeRect: eyeRightRect, fromTime: 5.0, completion: { result in
             switch result {
             case .success(let url):
                 print("\(url)")
